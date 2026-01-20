@@ -3,6 +3,13 @@ import GoogleProvider from 'next-auth/providers/google'
 import AzureADProvider from 'next-auth/providers/azure-ad'
 import CredentialsProvider from 'next-auth/providers/credentials'
 
+const getYahooRedirectUri = () => {
+  const baseUrl = process.env.NEXTAUTH_URL || process.env.VERCEL_URL 
+    ? `https://${process.env.VERCEL_URL}` 
+    : 'http://localhost:3000'
+  return `${baseUrl}/api/auth/callback/yahoo`
+}
+
 const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
@@ -23,7 +30,7 @@ const authOptions: NextAuthOptions = {
         url: 'https://api.login.yahoo.com/oauth2/request_auth',
         params: {
           client_id: process.env.YAHOO_CLIENT_ID,
-          redirect_uri: process.env.YAHOO_REDIRECT_URI || 'http://localhost:3000/api/auth/callback/yahoo',
+          redirect_uri: process.env.YAHOO_REDIRECT_URI || getYahooRedirectUri(),
           response_type: 'code',
           language: 'en-us',
         },

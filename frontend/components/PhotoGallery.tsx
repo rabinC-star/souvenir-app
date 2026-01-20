@@ -178,7 +178,7 @@ export default function PhotoGallery({ onEditPhoto, onReplacePhoto }: PhotoGalle
                       </button>
                     </div>
                     <input
-                      ref={(el) => (fileInputRefs.current[photo.id] = el)}
+                      ref={(el) => { fileInputRefs.current[photo.id] = el }}
                       type="file"
                       accept="image/*"
                       className="hidden"
